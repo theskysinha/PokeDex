@@ -8,17 +8,18 @@ public class PokemonListItem : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public Image pokemonImage;
-    public GameObject detailPanel; // Reference to the detail panel prefab
     private Pokemon pokemon;
+    private PokemonObjectPool objectPool;
 
-    public void Setup(Pokemon pokemon)
+    public void Setup(Pokemon pokemon, PokemonObjectPool pool)
     {
         this.pokemon = pokemon;
+        this.objectPool = pool;
         nameText.text = pokemon.name;
-        StartCoroutine(LoadPokemonImage(pokemon.url));
+        StartCoroutine(LoadPokemonDetails(pokemon.url));
     }
 
-    private IEnumerator LoadPokemonImage(string url)
+    private IEnumerator LoadPokemonDetails(string url)
     {
         UnityWebRequest request = UnityWebRequest.Get(url);
         yield return request.SendWebRequest();
@@ -50,12 +51,9 @@ public class PokemonListItem : MonoBehaviour
         }
     }
 
-    public void OnClick()
+    public void ReturnToPool()
     {
-        detailPanel = GameObject.Find("PokemonDetails");
-        detailPanel.SetActive(true);
-        this.gameObject.transform.parent.gameObject.SetActive(false);
-        detailPanel.GetComponent<PokemonDetailPanel>().Setup(pokemon);
+        objectPool.Release(gameObject);
     }
 }
 

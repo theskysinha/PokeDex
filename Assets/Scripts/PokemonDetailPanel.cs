@@ -69,7 +69,6 @@ public class PokemonDetailPanel : MonoBehaviour
 
     private void PopulateStats(Stat[] stats)
     {
-        statsText.text = "Stats:\n";
         foreach (Stat stat in stats)
         {
             statsText.text += $"{stat.stat.name}: {stat.base_stat}\n";
@@ -78,10 +77,9 @@ public class PokemonDetailPanel : MonoBehaviour
 
     private void PopulateTypes(Type[] types)
     {
-        typesText.text = "Types:\n";
         foreach (Type type in types)
         {
-            typesText.text += $"{type.type.name}\n";
+            typesText.text += $"{type.type.name} ";
         }
     }
 }
