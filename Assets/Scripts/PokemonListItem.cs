@@ -1,39 +1,72 @@
-using System.Collections;
-using UnityEngine;
-using UnityEngine.Networking;
+// using System.Collections;
+// using UnityEngine;
+// using UnityEngine.Networking;
+// using UnityEngine.UI;
+// using TMPro;
+
 using UnityEngine.UI;
+using UnityEngine;
+using System.Collections;
+using UnityEngine.Networking;
 using TMPro;
 
 public class PokemonListItem : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public Image pokemonImage;
-    private Pokemon pokemon;
-    private PokemonObjectPool objectPool;
 
-    public void Setup(Pokemon pokemon, PokemonObjectPool pool)
+    private string pokemonName;
+    private string imageUrl;
+
+    public void SetData(string name, string imageUrl)
     {
-        this.pokemon = pokemon;
-        this.objectPool = pool;
-        nameText.text = pokemon.name;
-        StartCoroutine(LoadPokemonDetails(pokemon.url));
+        this.pokemonName = name;
+        this.imageUrl = imageUrl;
+        
+        nameText.text = name;
+        StartCoroutine(DownloadImage(imageUrl));
+        // You'll need to implement a method to load the image from the URL
+        // For example: StartCoroutine(LoadImageFromUrl(imageUrl));
     }
 
-    private IEnumerator LoadPokemonDetails(string url)
+    public void Reset()
     {
-        UnityWebRequest request = UnityWebRequest.Get(url);
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
-        {
-            Debug.LogError(request.error);
-        }
-        else
-        {
-            PokemonDetails details = JsonUtility.FromJson<PokemonDetails>(request.downloadHandler.text);
-            StartCoroutine(DownloadImage(details.sprites.front_default));
-        }
+        nameText.text = "";
+        pokemonImage.sprite = null;
     }
+
+
+// public class PokemonListItem : MonoBehaviour
+// {
+//     public TextMeshProUGUI nameText;
+//     public Image pokemonImage;
+//     private Pokemon pokemon;
+//     private PokemonObjectPool objectPool;
+//     private bool isInPool = false;
+
+//     public void SetData(Pokemon pokemon, PokemonObjectPool pool)
+//     {
+//         this.pokemon = pokemon;
+//         this.objectPool = pool;
+//         nameText.text = pokemon.name;
+//         StartCoroutine(LoadPokemonDetails(pokemon.url));
+//     }
+
+    // private IEnumerator LoadPokemonDetails(string url)
+    // {
+    //     UnityWebRequest request = UnityWebRequest.Get(url);
+    //     yield return request.SendWebRequest();
+
+    //     if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+    //     {
+    //         Debug.LogError(request.error);
+    //     }
+    //     else
+    //     {
+    //         PokemonDetails details = JsonUtility.FromJson<PokemonDetails>(request.downloadHandler.text);
+    //         StartCoroutine(DownloadImage(details.sprites.front_default));
+    //     }
+    // }
 
     private IEnumerator DownloadImage(string imageUrl)
     {
@@ -51,11 +84,16 @@ public class PokemonListItem : MonoBehaviour
         }
     }
 
-    public void ReturnToPool()
-    {
-        objectPool.Release(gameObject);
-    }
 }
+//     public void ReturnToPool()
+//     {
+//         if (!isInPool)
+//         {
+//             isInPool = true;
+//             objectPool.Release(gameObject);
+//         }
+//     }
+// }
 
 [System.Serializable]
 public class Pokemon
@@ -75,3 +113,5 @@ public class Sprites
 {
     public string front_default;
 }
+
+

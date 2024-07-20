@@ -7,32 +7,33 @@ public class ScrollDetector : MonoBehaviour
     public PokemonAPIManager pokemonAPIManager;
     public RectTransform content;
 
-    void Update()
-    {
-        if (scrollRect.verticalNormalizedPosition <= 0.1f)
-        {
-            pokemonAPIManager.LoadMorePokemon();
-        }
+    // void Update()
+    // {
+    //     if (scrollRect.verticalNormalizedPosition <= 0.1f)
+    //     {
+    //         pokemonAPIManager.LoadMorePokemon();
+    //     }
 
-        CheckOffScreenItems();
-    }
+    //     CheckOffScreenItems();
+    // }
 
-    private void CheckOffScreenItems()
-    {
-        float viewportHeight = scrollRect.viewport.rect.height;
-        float contentYMin = content.anchoredPosition.y;
-        float contentYMax = contentYMin + viewportHeight;
+    // private void CheckOffScreenItems()
+    // {
+    //     float viewportHeight = scrollRect.viewport.rect.height;
+    //     float contentYMin = content.anchoredPosition.y;
+    //     float contentYMax = contentYMin + viewportHeight;
 
-        foreach (Transform child in content)
-        {
-            RectTransform rectTransform = child.GetComponent<RectTransform>();
-            float itemYMin = rectTransform.anchoredPosition.y;
-            float itemYMax = itemYMin + rectTransform.rect.height;
+    //     for (int i = content.childCount - 1; i >= 0; i--)
+    //     {
+    //         Transform child = content.GetChild(i);
+    //         RectTransform rectTransform = child.GetComponent<RectTransform>();
+    //         float itemYMin = rectTransform.anchoredPosition.y;
+    //         float itemYMax = itemYMin + rectTransform.rect.height;
 
-            if (itemYMax < contentYMin || itemYMin > contentYMax)
-            {
-                child.GetComponent<PokemonListItem>().ReturnToPool();
-            }
-        }
-    }
+    //         if (itemYMax < contentYMin || itemYMin > contentYMax)
+    //         {
+    //             pokemonAPIManager.ReturnItemToPool(child.gameObject);
+    //         }
+    //     }
+    // }
 }

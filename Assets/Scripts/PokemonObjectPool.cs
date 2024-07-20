@@ -4,44 +4,45 @@ using UnityEngine.Pool;
 
 public class PokemonObjectPool : MonoBehaviour
 {
-    public GameObject pokemonListItemPrefab;
-    public int initialPoolSize = 20;
+    // public GameObject pokemonListItemPrefab;
+    // private ObjectPool<GameObject> pool;
+    // public Transform parent;
 
-    private ObjectPool<GameObject> pool;
+    // void Start()
+    // {
+    //     pool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool, OnDestroyPoolObject, false, 20, 100);
+    // }
 
-    void Awake()
-    {
-        pool = new ObjectPool<GameObject>(
-            createFunc: () => Instantiate(pokemonListItemPrefab),
-            actionOnGet: obj => obj.SetActive(true),
-            actionOnRelease: obj => obj.SetActive(false),
-            actionOnDestroy: Destroy,
-            defaultCapacity: initialPoolSize,
-            maxSize: 50
-        );
+    // public GameObject Get()
+    // {
+    //     return pool.Get();
+    // }
 
-        // Pre-warm the pool with initial objects
-        for (int i = 0; i < initialPoolSize; i++)
-        {
-            GameObject obj = pool.Get();
-            pool.Release(obj);
-        }
-    }
+    // public void Release(GameObject obj)
+    // {
+    //     pool.Release(obj);
+    // }
 
-    public GameObject Get()
-    {
-        return pool.Get();
-    }
+    // private GameObject CreatePooledItem()
+    // {
+    //     GameObject obj = Instantiate(pokemonListItemPrefab, parent);
+    //     obj.SetActive(false);
+    //     return obj;
+    // }
 
-    public void Release(GameObject obj)
-    {
-        pool.Release(obj);
-    }
+    // private void OnTakeFromPool(GameObject obj)
+    // {
+    //     obj.SetActive(true);
+    // }
 
-    public void Clear()
-    {
-        pool.Clear();
-    }
+    // private void OnReturnedToPool(GameObject obj)
+    // {
+    //     obj.SetActive(false);
+    //     obj.transform.SetParent(transform);
+    // }
 
-    
+    // private void OnDestroyPoolObject(GameObject obj)
+    // {
+    //     Destroy(obj);
+    // }
 }
