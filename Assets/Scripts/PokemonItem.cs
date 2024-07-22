@@ -9,11 +9,14 @@ public class PokemonItem : MonoBehaviour
     public TextMeshProUGUI nameText;
     public Image pokemonImage;
     private Pokemon pokemon;
+    // Object pool reference
+    public ObjectPool ObjectPool { get; set; }
 
     public void Setup(Pokemon newPokemon)
     {
         pokemon = newPokemon;
         nameText.text = pokemon.name;
+        pokemonImage.sprite = null;
         StartCoroutine(LoadPokemonDetails(pokemon.url));
     }
 

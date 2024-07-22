@@ -107,35 +107,4 @@ public class PokemonDetailsUI : MonoBehaviour
     }
 }
 
-[System.Serializable]
-public class PokemonFullDetails
-{
-    public Stat[] stats;
-    public Type[] types;
-}
-
-[System.Serializable]
-public class Stat
-{
-    public int base_stat;
-    public StatInfo stat;
-}
-
-[System.Serializable]
-public class StatInfo
-{
-    public string name;
-}
-
-[System.Serializable]
-public class Type
-{
-    public TypeInfo type;
-}
-
-[System.Serializable]
-public class TypeInfo
-{
-    public string name;
-}
 
